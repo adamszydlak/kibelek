@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Przesuwanie obrazka</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #container {
+            position: relative;
+            width: 1000px;
+            height: 600px;
+            border: 15px solid black;
+            background-color:chocolate;
+        }
+        #image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width:50px;
+            height: 50px;
+            transform: translate(-50%, -50%);
+            transition: top 0.1s, left 0.1s;
+        }
+        #kibel {
+            position: absolute;
+            top: 80%;
+            left: 85%;
+            width:150px;
+            height: 150px;
+            transform: translate(-50%, -50%);
+            transition: top 0.1s, left 0.1s;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <img id="image" src="./kupa.png" alt="Obrazek">
+    <img id="kibel" src="./kibel.png" alt="Obrazek">
+</div>
+
+<script>
+    const image = document.getElementById('image');
+    let posX = 50; // Początkowa pozycja X (w %)
+    let posY = 50; // Początkowa pozycja Y (w %)
+
+    // Funkcja do przesuwania obrazka
+    function moveImage(event) {
+        const step = 5; // Krok przesunięcia w %
+        
+        switch (event.key) {
+            case "ArrowUp":
+                posY -= step;
+                break;
+            case "ArrowDown":
+                posY += step;
+                break;
+            case "ArrowLeft":
+                posX -= step;
+                break;
+            case "ArrowRight":
+                posX += step;
+                break;
+        }
+
+        // Ograniczamy przesuwanie do granic kontenera
+        posX = Math.max(0, Math.min(100, posX));
+        posY = Math.max(0, Math.min(100, posY));
+
+        image.style.left = `${posX}%`;
+        image.style.top = `${posY}%`;
+    }
+
+    // Nasłuchiwanie na naciśnięcie klawiszy
+    window.addEventListener('keydown', moveImage);
+</script>
+
+</body>
+</html>
